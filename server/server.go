@@ -352,7 +352,7 @@ func (s *Server) generateToken(req *oauth2.Request, ctx *context.Context) (map[s
 	case oauth2.RefreshToken:
 		if refresh, err := s.Manager.TokenGetByRefresh(req.Refresh); err != nil {
 			return nil, err
-		} else if refresh == nil {
+		} else if refresh == nil || refresh.GetClientId() != req.ClientId {
 			return nil, oauth2.ErrInvalidRefreshToken
 		} else if refresh.IsRefreshExpired() {
 			return nil, oauth2.ErrExpiredRefreshToken

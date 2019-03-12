@@ -18,13 +18,14 @@ var (
 	ErrUnsupportedGrantType    = errors.New("unsupported_grant_type")
 
 	// extra customized errors
-	ErrInvalidRedirectURI   = errors.New("invalid redirect uri")
-	ErrInvalidAuthorizeCode = errors.New("invalid authorize code")
-	ErrInvalidAccessToken   = errors.New("invalid access token")
-	ErrInvalidRefreshToken  = errors.New("invalid refresh token")
-	ErrExpiredAuthorizeCode = errors.New("expired authorize code")
-	ErrExpiredAccessToken   = errors.New("expired access token")
-	ErrExpiredRefreshToken  = errors.New("expired refresh token")
+	ErrInvalidRedirectURI        = errors.New("invalid redirect uri")
+	ErrInvalidAuthorizeCode      = errors.New("invalid authorize code")
+	ErrInvalidAccessToken        = errors.New("invalid access token")
+	ErrInvalidRefreshToken       = errors.New("invalid refresh token")
+	ErrExpiredAuthorizeCode      = errors.New("expired authorize code")
+	ErrExpiredAccessToken        = errors.New("expired access token")
+	ErrExpiredRefreshToken       = errors.New("expired refresh token")
+	ErrInvalidUsernameOrPassword = errors.New("invalid username or password")
 )
 
 // Descriptions error description
@@ -40,13 +41,14 @@ var Descriptions = map[error]string{
 	ErrInvalidGrant:            "The provided authorization grant (e.g., authorization code, resource owner credentials) or refresh token is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client",
 	ErrUnsupportedGrantType:    "The authorization grant type is not supported by the authorization server",
 
-	ErrInvalidRedirectURI:   "The request is missing redirect uri or includes an invalid redirect uri value",
-	ErrInvalidAuthorizeCode: "The request is missing authorize code or includes an invalid authorize code value",
-	ErrInvalidAccessToken:   "The request is missing access token or includes an invalid access token value",
-	ErrInvalidRefreshToken:  "The request is missing refresh token or includes an invalid refresh token value",
-	ErrExpiredAuthorizeCode: "The request includes an expired authorize code value",
-	ErrExpiredAccessToken:   "The request includes an expired access token value",
-	ErrExpiredRefreshToken:  "The request includes an expired refresh token value",
+	ErrInvalidRedirectURI:        "The request is missing redirect uri or includes an invalid redirect uri value",
+	ErrInvalidAuthorizeCode:      "The request is missing authorize code or includes an invalid authorize code value",
+	ErrInvalidAccessToken:        "The request is missing access token or includes an invalid access token value",
+	ErrInvalidRefreshToken:       "The request is missing refresh token or includes an invalid refresh token value",
+	ErrExpiredAuthorizeCode:      "The request includes an expired authorize code value",
+	ErrExpiredAccessToken:        "The request includes an expired access token value",
+	ErrExpiredRefreshToken:       "The request includes an expired refresh token value",
+	ErrInvalidUsernameOrPassword: "The request includes invalid username or password",
 }
 
 // StatusCodes response error HTTP status code
@@ -62,11 +64,12 @@ var StatusCodes = map[error]int{
 	ErrInvalidGrant:            401,
 	ErrUnsupportedGrantType:    401,
 
-	ErrInvalidRedirectURI:   400,
-	ErrInvalidAuthorizeCode: 400,
-	ErrInvalidAccessToken:   400,
-	ErrInvalidRefreshToken:  400,
-	ErrExpiredAuthorizeCode: 400,
-	ErrExpiredAccessToken:   400,
-	ErrExpiredRefreshToken:  400,
+	ErrInvalidRedirectURI:        400,
+	ErrInvalidAuthorizeCode:      400,
+	ErrInvalidAccessToken:        400,
+	ErrInvalidRefreshToken:       400,
+	ErrExpiredAuthorizeCode:      400,
+	ErrExpiredAccessToken:        400,
+	ErrExpiredRefreshToken:       400,
+	ErrInvalidUsernameOrPassword: 400,
 }
