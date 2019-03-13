@@ -82,15 +82,15 @@ Resp:
 	if ctx.ResponseWriter.Started {
 		return
 	}
-	if h := s.customizedAuthorizeErrHandler; h != nil {
-		if herr := h(resErr, ctx); herr != nil {
-			resErr = herr
-		}
-	}
-	if ctx.ResponseWriter.Started {
-		return
-	}
 	if resErr != nil {
+		if h := s.customizedAuthorizeErrHandler; h != nil {
+			if herr := h(resErr, ctx); herr != nil {
+				resErr = herr
+			}
+		}
+		if ctx.ResponseWriter.Started {
+			return
+		}
 		if err := RedirectError(req, resErr, ctx); err != nil {
 			ResponseErr(err, ctx)
 		}
