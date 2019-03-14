@@ -5,7 +5,7 @@ type Config struct {
 	RedirectUriSep     string
 	RedirectAllowEmpty bool
 	AllowGrantType     map[GrantType]GrantTypeConfig
-	ManagerConfig
+	ManagerConfig      ManagerConfig
 }
 
 type ManagerConfig struct {
@@ -41,12 +41,12 @@ var DefaultOauth2Config = Config{
 			IsResetRefreshTime: false,
 		},
 		PasswordCredentials: {
-			AccessTokenExpire:  12 * 3600,
+			AccessTokenExpire:  6 * 3600,
 			IsGenerateRefresh:  false,
 			IsResetRefreshTime: false,
 		},
 		ClientCredentials: {
-			AccessTokenExpire:  12 * 3600,
+			AccessTokenExpire:  6 * 3600,
 			IsGenerateRefresh:  false,
 			IsResetRefreshTime: false,
 		},
@@ -59,7 +59,7 @@ var DefaultOauth2Config = Config{
 	},
 	ManagerConfig: ManagerConfig{
 		TokenGcInterval:  7 * 24 * 3600,
-		TokenStoreName:   "mysql",
+		TokenStoreName:   "mem",
 		GeneratorName:    "default",
 		TokenStoreConfig: "",
 	},

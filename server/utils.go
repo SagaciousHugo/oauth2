@@ -38,7 +38,7 @@ func GetErrorData(err error) (data map[string]interface{}, statusCode int, heade
 		data["error_description"] = v
 	}
 
-	if v := resp.URI; v != "" {
+	if v := resp.Uri; v != "" {
 		data["error_uri"] = v
 	}
 

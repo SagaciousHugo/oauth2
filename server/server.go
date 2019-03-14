@@ -73,7 +73,7 @@ func (s *Server) Authorize(ctx *context.Context) {
 			req.UserId = userId
 		}
 	} else {
-		resErr = fmt.Errorf("CheckUserGrantAccessHandler is nil")
+		resErr = fmt.Errorf("checkUserGrantAccessHandler is nil")
 		goto Resp
 	}
 	tokenData, resErr = s.generateToken(req, ctx)
@@ -152,7 +152,7 @@ func (s *Server) validationAuthorizeRequest(ctx *context.Context) (req *oauth2.R
 			return
 		}
 	} else {
-		err = fmt.Errorf("AuthenticateClientHandler is nil")
+		err = fmt.Errorf("authenticateClientHandler is nil")
 		return
 	}
 
@@ -256,7 +256,7 @@ func (s *Server) validationTokenRequest(ctx *context.Context) (req *oauth2.Reque
 			return nil, herr
 		}
 	} else {
-		return nil, fmt.Errorf("AuthenticateClientHandler is nil")
+		return nil, fmt.Errorf("authenticateClientHandler is nil")
 	}
 
 	// check invalid scope
@@ -280,7 +280,7 @@ func (s *Server) validationTokenRequest(ctx *context.Context) (req *oauth2.Reque
 				return nil, herr
 			}
 		} else {
-			return nil, fmt.Errorf("CheckUserPasswordHandler is nil")
+			return nil, fmt.Errorf("checkUserPasswordHandler is nil")
 		}
 	case oauth2.ClientCredentials:
 		if h := s.customizedClientCredentialsUserIdHandler; h != nil {

@@ -28,7 +28,7 @@ type Response struct {
 	Error       error
 	ErrorCode   int
 	Description string
-	URI         string
+	Uri         string
 	StatusCode  int
 	Header      http.Header
 }

@@ -6,12 +6,11 @@ import (
 	"github.com/sagacioushugo/oauth2"
 	"github.com/sagacioushugo/oauth2/generator"
 	"github.com/sagacioushugo/oauth2/store"
-	"github.com/sagacioushugo/oauth2/store/store_mysql"
 	"time"
 )
 
 func init() {
-	Register("mysql", &store_mysql.TokenStore{})
+	Register("mem", &store.MemTokenStore{})
 	Register("default", &generator.Default{})
 }
 
