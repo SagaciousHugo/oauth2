@@ -260,11 +260,13 @@ func (s *Server) validationTokenRequest(ctx *context.Context) (req *oauth2.Reque
 	}
 
 	// check invalid scope
-	if h := s.customizedCheckScopeHandler; h != nil {
-		if allowed, herr := h(scope, &grantType, ctx); herr != nil {
-			return nil, herr
-		} else if !allowed {
-			return nil, oauth2.ErrInvalidScope
+	if grantType != oauth2.AuthorizationCode && grantType != oauth2.RefreshToken {
+		if h := s.customizedCheckScopeHandler; h != nil {
+			if allowed, herr := h(scope, &grantType, ctx); herr != nil {
+				return nil, herr
+			} else if !allowed {
+				return nil, oauth2.ErrInvalidScope
+			}
 		}
 	}
 	// AuthorizationCode and RefreshToken userId consists in their code or token

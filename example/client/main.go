@@ -1,1 +1,5 @@
 package client
+
+func main() {
+
+}
