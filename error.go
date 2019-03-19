@@ -18,14 +18,14 @@ var (
 	ErrUnsupportedGrantType    = errors.New("unsupported_grant_type")
 
 	// extra customized errors
-	ErrInvalidRedirectURI        = errors.New("invalid redirect uri")
-	ErrInvalidAuthorizeCode      = errors.New("invalid authorize code")
-	ErrInvalidAccessToken        = errors.New("invalid access token")
-	ErrInvalidRefreshToken       = errors.New("invalid refresh token")
-	ErrExpiredAuthorizeCode      = errors.New("expired authorize code")
-	ErrExpiredAccessToken        = errors.New("expired access token")
-	ErrExpiredRefreshToken       = errors.New("expired refresh token")
-	ErrInvalidUsernameOrPassword = errors.New("invalid username or password")
+	ErrInvalidRedirectURI        = errors.New("invalid_redirect_uri")
+	ErrInvalidAuthorizeCode      = errors.New("invalid_authorize_code")
+	ErrInvalidAccessToken        = errors.New("invalid_access_token")
+	ErrInvalidRefreshToken       = errors.New("invalid_refresh_token")
+	ErrExpiredAuthorizeCode      = errors.New("expired_authorize_code")
+	ErrExpiredAccessToken        = errors.New("expired_access_token")
+	ErrExpiredRefreshToken       = errors.New("expired_refresh_token")
+	ErrInvalidUsernameOrPassword = errors.New("invalid_username_or_password")
 )
 
 // Descriptions error description
