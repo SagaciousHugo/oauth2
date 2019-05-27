@@ -92,7 +92,7 @@ Resp:
 			return
 		}
 		if err := RedirectError(req, resErr, ctx); err != nil {
-			ResponseErr(err, ctx)
+			_ = ResponseErr(err, ctx)
 		}
 
 	} else {
@@ -100,7 +100,7 @@ Resp:
 			tokenData["state"] = req.State
 		}
 		if err := Redirect(req, tokenData, ctx); err != nil {
-			ResponseErr(err, ctx)
+			_ = ResponseErr(err, ctx)
 		}
 	}
 }
@@ -227,9 +227,9 @@ Resp:
 
 func (s *Server) validationTokenRequest(ctx *context.Context) (req *oauth2.Request, err error) {
 
-	clientId, clientSecret, err := GetClientInfoFromBasicAuth(ctx)
-	if err != nil {
-		return nil, err
+	clientId, clientSecret, ok := ParseBasicAuth(ctx.Input.Header("Authorization"))
+	if !ok {
+		return nil, oauth2.ErrInvalidClient
 	}
 	var code = ctx.Input.Query("code")
 	var scope = ctx.Input.Query("scope")

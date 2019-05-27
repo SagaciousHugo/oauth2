@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -12,43 +13,19 @@ import (
 )
 
 func GetErrorData(err error) (data map[string]interface{}, statusCode int, header http.Header) {
-	resp := new(oauth2.Response)
-	if v, ok := oauth2.Descriptions[err]; ok {
-		resp.Error = err
-		resp.Description = v
-		resp.StatusCode = oauth2.StatusCodes[err]
-	} else {
-		resp.Error = oauth2.ErrServerError
-		resp.Description = err.Error()
-		resp.StatusCode = oauth2.StatusCodes[oauth2.ErrServerError]
-
-	}
-
 	data = make(map[string]interface{})
-
-	if err := resp.Error; err != nil {
+	if oe, ok := err.(*oauth2.Oauth2Error); ok {
+		data["error"] = oe.Error()
+		data["error_description"] = oe.ErrorDescription()
+		statusCode = oe.StatusCode()
+	} else if sc, ok := err.(oauth2.StatusCoder); ok {
 		data["error"] = err.Error()
+		statusCode = sc.StatusCode()
+	} else {
+		data["error"] = err.Error()
+		data["error_description"] = oauth2.ErrServerError.ErrorDescription()
+		statusCode = oauth2.ErrServerError.StatusCode()
 	}
-
-	if v := resp.ErrorCode; v != 0 {
-		data["error_code"] = v
-	}
-
-	if v := resp.Description; v != "" {
-		data["error_description"] = v
-	}
-
-	if v := resp.Uri; v != "" {
-		data["error_uri"] = v
-	}
-
-	header = resp.Header
-
-	statusCode = http.StatusInternalServerError
-	if v := resp.StatusCode; v > 0 {
-		statusCode = v
-	}
-
 	return
 }
 
@@ -123,27 +100,18 @@ func ResponseToken(data map[string]interface{}, header http.Header, ctx *context
 	return
 }
 
-func GetClientInfoFromBasicAuth(ctx *context.Context) (clientId, clientSecret string, err error) {
-	header := ctx.Input.Header("Authorization")
-	parts := strings.Split(header, " ")
-	if len(parts) != 2 || parts[0] != "Basic" {
-		return "", "", oauth2.ErrInvalidClient
+func ParseBasicAuth(basicAuth string) (username, password string, ok bool) {
+	const prefix = "Basic "
+	if !strings.HasPrefix(basicAuth, prefix) {
+		return
 	}
-	decodeBytes, err := base64.StdEncoding.DecodeString(parts[1])
+	c, err := base64.StdEncoding.DecodeString(basicAuth[len(prefix):])
 	if err != nil {
-		return "", "", err
+		return
 	}
-	authStr := strings.Split(string(decodeBytes), ":")
-	if len(authStr) != 2 {
-		return "", "", oauth2.ErrInvalidClient
-	} else {
-		if clientId, err = url.QueryUnescape(authStr[0]); err != nil {
-			return "", "", err
-		} else if clientSecret, err = url.QueryUnescape(authStr[1]); err != nil {
-			return "", "", err
-		} else {
-			return clientId, clientSecret, nil
-		}
+	s := bytes.IndexByte(c, ':')
+	if s < 0 {
+		return
 	}
-
+	return string(c[:s]), string(c[s+1:]), true
 }
