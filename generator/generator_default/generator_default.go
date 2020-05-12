@@ -1,10 +1,11 @@
-package generator
+package generator_default
 
 import (
 	"bytes"
 	"encoding/base64"
 	"github.com/astaxie/beego/context"
 	"github.com/sagacioushugo/oauth2"
+	"github.com/sagacioushugo/oauth2/manager"
 	"github.com/satori/go.uuid"
 	"strconv"
 	"strings"
@@ -12,6 +13,10 @@ import (
 )
 
 type Default struct {
+}
+
+func init() {
+	manager.Register("default", &Default{})
 }
 
 func (g *Default) Code(req *oauth2.Request, ctx *context.Context) (code string, err error) {

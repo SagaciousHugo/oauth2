@@ -1,9 +1,11 @@
-package store
+package store_mem
 
 import (
 	"fmt"
 	"github.com/astaxie/beego/context"
 	"github.com/sagacioushugo/oauth2"
+	"github.com/sagacioushugo/oauth2/manager"
+	"github.com/sagacioushugo/oauth2/store"
 	"sync"
 	"time"
 )
@@ -22,6 +24,10 @@ type MemToken struct {
 	Code            string
 	CodeCreateAt    time.Time
 	CodeExpireIn    int64
+}
+
+func init() {
+	manager.Register("mem", &MemTokenStore{})
 }
 
 func (token *MemToken) GetClientId() string {
@@ -141,12 +147,12 @@ func (s *MemTokenStore) Init(tokenConfig string) error {
 	return nil
 }
 
-func (s *MemTokenStore) NewToken(ctx *context.Context) Token {
+func (s *MemTokenStore) NewToken(ctx *context.Context) store.Token {
 	token := MemToken{}
 	return &token
 }
 
-func (s *MemTokenStore) Create(token Token) error {
+func (s *MemTokenStore) Create(token store.Token) error {
 	t := token.(*MemToken)
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -156,7 +162,7 @@ func (s *MemTokenStore) Create(token Token) error {
 	return nil
 }
 
-func (s *MemTokenStore) GetByAccess(access string) (Token, error) {
+func (s *MemTokenStore) GetByAccess(access string) (store.Token, error) {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for _, v := range s.list {
@@ -167,7 +173,7 @@ func (s *MemTokenStore) GetByAccess(access string) (Token, error) {
 	return nil, oauth2.ErrInvalidAccessToken
 
 }
-func (s *MemTokenStore) GetByRefresh(refresh string) (Token, error) {
+func (s *MemTokenStore) GetByRefresh(refresh string) (store.Token, error) {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for _, v := range s.list {
@@ -178,7 +184,7 @@ func (s *MemTokenStore) GetByRefresh(refresh string) (Token, error) {
 	return nil, oauth2.ErrInvalidRefreshToken
 
 }
-func (s *MemTokenStore) GetByCode(code string) (Token, error) {
+func (s *MemTokenStore) GetByCode(code string) (store.Token, error) {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for _, v := range s.list {
@@ -188,7 +194,7 @@ func (s *MemTokenStore) GetByCode(code string) (Token, error) {
 	}
 	return nil, oauth2.ErrInvalidAuthorizeCode
 }
-func (s *MemTokenStore) CreateAndDel(tokenNew Token, tokenDel Token) error {
+func (s *MemTokenStore) CreateAndDel(tokenNew store.Token, tokenDel store.Token) error {
 	new := tokenNew.(*MemToken)
 	del := tokenDel.(*MemToken)
 	s.lock.Lock()

@@ -9,11 +9,6 @@ import (
 	"time"
 )
 
-func init() {
-	Register("mem", &store.MemTokenStore{})
-	Register("default", &generator.Default{})
-}
-
 var tokenStores = make(map[string]store.TokenStore)
 
 var generators = make(map[string]generator.Generator)

@@ -229,7 +229,8 @@ func (s *Server) validationTokenRequest(ctx *context.Context) (req *oauth2.Reque
 
 	clientId, clientSecret, ok := ParseBasicAuth(ctx.Input.Header("Authorization"))
 	if !ok {
-		return nil, oauth2.ErrInvalidClient
+		clientId = ctx.Input.Query("client_id")
+		clientSecret = ctx.Input.Query("client_secret")
 	}
 	var code = ctx.Input.Query("code")
 	var scope = ctx.Input.Query("scope")
