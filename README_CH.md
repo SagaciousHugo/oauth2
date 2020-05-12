@@ -1,5 +1,5 @@
 # Golang Oauth2 Server
-基于github.com/go-oauth2的二次开发，提供了TokenStore和TokenGenerator基于接口的可拔插式设计，能够方便的定制自己需要的TokenStore和Generator，并且支持TokenGC功能。
+基于`github.com/go-oauth2`的二次开发，提供了TokenStore和TokenGenerator基于接口的可拔插式设计，能够方便的定制自己需要的TokenStore和Generator，并且支持TokenGC功能。
 
 
 ## 特点

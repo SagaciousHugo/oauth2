@@ -9,7 +9,7 @@ Based on the secondary development `github.com/go-oauth2`, provides TokenStore a
 * support for Token GC
 * support custom Token Store with any database (you need to implement the store.tokenstore interface yourself)
 * support custom Token Generator with any algorithm (you need to implement the Generator.Generator interface yourself)
-* based entirely on [RFC 6749] (https://tools.ietf.org/html/rfc6749) implementation (support RedirectURI is empty, support multiple RedirectURI configuration)
+* based entirely on [RFC 6749](https://tools.ietf.org/html/rfc6749) implementation (support RedirectURI is empty, support multiple RedirectURI configuration)
 
 ## Quick Start
 ### Download and install
